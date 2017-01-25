@@ -6,8 +6,12 @@ class SessionsController < ApplicationController
 	def create
 		# raise cookies.inspect
 		user = User.find_by(email: params[:email])
-		session[:user_id] = user.id
-		redirect_to user_path(user)
+		if user && user.authenticate(params[:password])
+			session[:user_id] = user.id
+			redirect_to user_path(user)
+		else
+			render :new
+		end
 	end
 
 	def destroy

@@ -10,6 +10,7 @@ def create
 	# "user"=>{"username"=>"test", "email"=>"test@gmail.com", "password"=>"test"}
 	user = User.new(user_params)
 	if user.save
+		session[:user_id] = user.id
 		redirect_to user
 	else
 		render :new
